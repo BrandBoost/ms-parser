@@ -1,0 +1,31 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+uvicorn = "*"
+python-dotenv = "*"
+fastapi = "*"
+scrapy = "*"
+beautifulsoup4 = "*"
+scrapy-fake-useragent = "*"
+selenium = "*"
+pytest = "*"
+httpx = "*"
+factory-boy = "*"
+pytest-asyncio = "*"
+requests = "*"
+aioresponses = "*"
+motor = "*"
+black = "*"
+beanie = "*"
+openpyxl = "*"
+mock = "*"
+pytest-httpx = "*"
+pyjwt = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"
