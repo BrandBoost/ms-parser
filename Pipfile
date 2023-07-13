@@ -17,13 +17,13 @@ factory-boy = "*"
 pytest-asyncio = "*"
 requests = "*"
 aioresponses = "*"
-motor = "*"
 black = "*"
 beanie = "*"
 openpyxl = "*"
 mock = "*"
 pytest-httpx = "*"
 pyjwt = "*"
+motor = "*"
 
 [dev-packages]
 
