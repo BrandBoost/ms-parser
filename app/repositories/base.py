@@ -19,12 +19,6 @@ class BaseRepository(MongoManager):
         created_instance = await self.db[self.collection].find_one({"_id": result.inserted_id})  # type: ignore
         return created_instance  # type: ignore
 
-    async def delete_by_id(self, owner_id: str, _id: str):
-        try:
-            return await self.db[self.collection].delete_one({"owner_id": owner_id, "_id": ObjectId(_id)})
-        except errors.InvalidId:
-            return None
-
     async def get_by_filter(self, owner_id: str, _id: str):
         try:
             return await self.db[self.collection].find_one({"owner_id": owner_id, "_id": ObjectId(_id)})  # type: ignore
