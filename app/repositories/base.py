@@ -1,4 +1,6 @@
-from bson import ObjectId, errors
+import typing as tp
+
+from bson import ObjectId
 from motor.motor_asyncio import AsyncIOMotorCollection
 
 from app.database.mongo import MongoManager
@@ -18,9 +20,3 @@ class BaseRepository(MongoManager):
         result = await self.db[self.collection].insert_one(instance)  # type: ignore
         created_instance = await self.db[self.collection].find_one({"_id": result.inserted_id})  # type: ignore
         return created_instance  # type: ignore
-
-    async def get_by_filter(self, owner_id: str, _id: str):
-        try:
-            return await self.db[self.collection].find_one({"owner_id": owner_id, "_id": ObjectId(_id)})  # type: ignore
-        except errors.InvalidId:
-            return None
