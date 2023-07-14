@@ -33,14 +33,6 @@ class UserParsersRepository(BaseRepository):
         except errors.InvalidId:
             return None
 
-    async def delete_by_id(self, owner_id: str, _id: Union[str, ObjectId]):
-        try:
-            user_id = ObjectId(_id) if isinstance(_id, str) else _id
-            return await self.db[self.collection]\
-                .delete_one({"owner_id": owner_id, "_id": user_id})  # type: ignore
-        except errors.InvalidId:
-            return None
-
     async def delete_by_type(self, owner_id: str, parser_type: str, from_created_at: Optional[datetime],
                              to_created_at: Optional[datetime]):
         try:
