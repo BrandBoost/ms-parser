@@ -1,6 +1,4 @@
-import typing as tp
-
-from bson import ObjectId
+from bson import ObjectId, errors
 from motor.motor_asyncio import AsyncIOMotorCollection
 
 from app.database.mongo import MongoManager
@@ -21,6 +19,14 @@ class BaseRepository(MongoManager):
         created_instance = await self.db[self.collection].find_one({"_id": result.inserted_id})  # type: ignore
         return created_instance  # type: ignore
 
-    async def delete_by_id(self, _id: tp.Union[str, ObjectId]) -> None:
-        user_id = ObjectId(_id) if isinstance(_id, str) else _id
-        await self.db[self.collection].delete_one({'_id': user_id})  # type: ignore
+    async def delete_by_id(self, owner_id: str, _id: str):
+        try:
+            return await self.db[self.collection].delete_one({"owner_id": owner_id, "_id": ObjectId(_id)})
+        except errors.InvalidId:
+            return None
+
+    async def get_by_filter(self, owner_id: str, _id: str):
+        try:
+            return await self.db[self.collection].find_one({"owner_id": owner_id, "_id": ObjectId(_id)})  # type: ignore
+        except errors.InvalidId:
+            return None
