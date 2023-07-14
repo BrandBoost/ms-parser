@@ -25,6 +25,7 @@ pytest-httpx = "*"
 pyjwt = "*"
 motor = "*"
 pandas = "*"
+python-multipart = "*"
 
 [dev-packages]
 
