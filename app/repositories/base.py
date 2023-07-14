@@ -21,6 +21,6 @@ class BaseRepository(MongoManager):
         created_instance = await self.db[self.collection].find_one({"_id": result.inserted_id})  # type: ignore
         return created_instance  # type: ignore
 
-    async def delete_by_id(self, _id: tp.Union[str, ObjectId]) -> None:
+    async def delete_by_id(self, _id: tp.Union[str, ObjectId], owner_id: str) -> None:
         user_id = ObjectId(_id) if isinstance(_id, str) else _id
-        await self.db[self.collection].delete_one({'_id': user_id})
+        await self.db[self.collection].delete_one({'_id': user_id, "owner_id": owner_id})
