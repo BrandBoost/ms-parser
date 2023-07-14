@@ -24,6 +24,7 @@ mock = "*"
 pytest-httpx = "*"
 pyjwt = "*"
 motor = "*"
+tp = "*"
 
 [dev-packages]
 

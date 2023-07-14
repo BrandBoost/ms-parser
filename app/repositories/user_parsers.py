@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from bson import ObjectId, errors
 
@@ -33,9 +33,11 @@ class UserParsersRepository(BaseRepository):
         except errors.InvalidId:
             return None
 
-    async def delete_by_id(self, owner_id: str, _id: str):
+    async def delete_by_id(self, owner_id: str, _id: Union[str, ObjectId]):
         try:
-            return await self.db[self.collection].delete_one({"owner_id": owner_id, "_id": ObjectId(_id)})
+            user_id = ObjectId(_id) if isinstance(_id, str) else _id
+            return await self.db[self.collection]\
+                .delete_one({"owner_id": owner_id, "_id": user_id})  # type: ignore
         except errors.InvalidId:
             return None
 
