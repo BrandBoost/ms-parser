@@ -27,6 +27,7 @@ class BaseParsersSchema(PreRetrieveParsersSchema):
 
 class GetListParserData(PreRetrieveParsersSchema):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    filters: List
 
 
 class ReadParsersSchema(BaseParsersSchema):
