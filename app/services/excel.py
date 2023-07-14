@@ -1,4 +1,5 @@
 import openpyxl
+import pandas as pd
 
 
 async def get_headers(keys, header_row: int, sheet):
@@ -27,3 +28,26 @@ async def create_excel(data: list, name_of_excel: str) -> str:
     excel_file = f"{name_of_excel}.xlsx"
     workbook.save(excel_file)
     return excel_file
+
+
+def read_headers():
+    data_frame = pd.read_excel('D:\Projects\PycharmProjects\ms-parser\Test.xlsx')
+    headers = data_frame.columns.tolist()
+    return headers, data_frame
+
+
+def read_excel(headers, data_frame):
+    row = 0
+    first_row_values = {}
+    result = []
+    while row is not None:
+        for header in headers:
+            first_row_values[header] = data_frame[header].iloc[row]
+        row += 1
+        result.append(first_row_values)
+        print(result)
+    return result
+
+
+headers, data_frame = read_headers()
+print(read_excel(headers, data_frame))
