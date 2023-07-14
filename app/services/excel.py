@@ -31,7 +31,7 @@ async def create_excel(data: list, name_of_excel: str) -> str:
 
 
 def read_headers():
-    data_frame = pd.read_excel('D:\Projects\PycharmProjects\ms-parser\Test.xlsx')
+    data_frame = pd.read_excel('D:\Projects\PycharmProjects\Test.xlsx')
     headers = data_frame.columns.tolist()
     return headers, data_frame
 
@@ -41,11 +41,14 @@ def read_excel(headers, data_frame):
     first_row_values = {}
     result = []
     while row is not None:
-        for header in headers:
-            first_row_values[header] = data_frame[header].iloc[row]
-        row += 1
-        result.append(first_row_values)
-        print(result)
+        try:
+            for header in headers:
+                first_row_values[header] = data_frame[header].iloc[row]
+            row += 1
+            result.append(first_row_values)
+            print(result)
+        except IndexError:
+            break
     return result
 
 
