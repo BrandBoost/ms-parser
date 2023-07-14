@@ -48,7 +48,10 @@ async def get_all_by_status(status: str):
 
 
 async def delete_by_id(parser_id: str, owner_id: str):
-    return await UserParsersRepository().delete_by_id(_id=ObjectId(parser_id), owner_id=owner_id)
+    parser = await UserParsersRepository().delete_by_id(_id=ObjectId(parser_id), owner_id=owner_id)
+    if not parser:
+        raise HTTPException(status_code=404, detail='There are no chosen database with this id')
+    return parser
 
 
 async def create_excel_file(base_id: str):
