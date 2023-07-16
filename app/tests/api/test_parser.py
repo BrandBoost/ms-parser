@@ -1,6 +1,7 @@
 import io
 
 import pytest
+import mock
 
 from app.tests.conftest import async_client, access_token_with_id
 
@@ -42,15 +43,23 @@ async def test_excel_filters(async_client, access_token_with_id):
     assert response.status_code == 200
 
 
+@mock.patch('app.services.excel.read_excel')
+@mock.patch('app.services.excel.read_headers')
 @pytest.mark.asyncio
-async def test_excel_import(async_client, access_token_with_id):
+async def test_excel_import(mock_read_headers, mock_read_excel, async_client, access_token_with_id):
+    mock_read_headers.return_value = ['header1', 'header2']
+    mock_read_excel.return_value = [
+        {"header1": "value1_row1", "header2": "value2_row1"},
+        {"header1": "value1_row2", "header2": "value2_row2"},
+    ]
     file_obj = io.BytesIO(b"test file content")
     file_obj.name = "test_file.xlsx"
     filters = ["string", "string2", "string3", "string4"]
     response = await async_client.post(
         url=f'/api/v1/parsers/excel/import_parser/?parser_type=Avito',
-        files={"excel_file": file_obj},
-        data=filters,
+        files={"excel_file": (
+            file_obj.name, file_obj, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")},
+        data={"filters": filters},
         headers=access_token_with_id
     )
     assert response.status_code == 200

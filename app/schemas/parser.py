@@ -4,12 +4,12 @@ from typing import List
 from bson import ObjectId
 from pydantic import BaseModel, Field
 
-from app.enums.parsers import ParserStatus, ParserType
+from app.enums.parsers import ParserStatus
 from app.schemas.mongo_validators import PyObjectId
 
 
 class PreRetrieveParsersSchema(BaseModel):
-    parser_type: ParserType
+    parser_type: str
     owner_id: str
     created_at: datetime = Field(default_factory=datetime.now)
     status: ParserStatus
