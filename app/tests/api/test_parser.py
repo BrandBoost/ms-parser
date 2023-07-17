@@ -35,9 +35,9 @@ async def test_retrieve_user_parser(async_client, access_token_with_id, global_d
 
 
 @pytest.mark.asyncio
-async def test_excel_filters(async_client, access_token_with_id):
+async def test_get_parser_ids(async_client, access_token_with_id):
     response = await async_client.get(
-        url=f'/api/v1/parsers/excel/get_excel_types/',
+        url=f'/api/v1/parsers/excel/get_parser_ids/',
         headers=access_token_with_id
     )
     assert response.status_code == 200

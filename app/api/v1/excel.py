@@ -25,7 +25,7 @@ async def import_parser(request: Request, excel_file: UploadFile,
     return excel_file
 
 
-@api_router.get("/get_excel_types/", status_code=200)
-async def get_excel_types() -> ParserTypeFilters:
+@api_router.get("/get_parser_ids/", status_code=200)
+async def get_parser_ids() -> ParserTypeFilters:
     response_model = ParserTypeFilters()
     return response_model
