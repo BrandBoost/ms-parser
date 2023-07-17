@@ -1,7 +1,6 @@
 from datetime import datetime
 from typing import Optional
 
-from bson import ObjectId
 from fastapi import HTTPException
 
 from app.repositories.user_parsers import UserParsersRepository
@@ -46,4 +45,3 @@ async def get_all_by_status(status: str):
 
 async def delete_by_id(parser_id: str, owner_id: str):
     return await UserParsersRepository().delete_by_id(_id=parser_id, owner_id=owner_id)
-
