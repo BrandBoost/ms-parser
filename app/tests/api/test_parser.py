@@ -63,3 +63,12 @@ async def test_excel_import(mock_read_headers, mock_read_excel, async_client, ac
         headers=access_token_with_id
     )
     assert response.status_code == 200
+
+
+@pytest.mark.asyncio
+async def test_delete_parser(async_client, access_token_with_id, global_dict):
+    response = await async_client.delete(
+        url=f'/api/v1/parsers/delete_user_parser_by_id/{global_dict["parser_id"]}/',
+        headers=access_token_with_id
+    )
+    assert response.status_code == 200
