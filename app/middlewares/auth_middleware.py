@@ -38,7 +38,6 @@ class ApiKeyMiddleware(BaseHTTPMiddleware):
     not_authorize_paths = [
         "/docs",
         "/openapi.json",
-        "/api/v1/parsers/excel/get_excel_types/"
     ]
 
     async def dispatch(self, request: Request, call_next):

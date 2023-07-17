@@ -56,10 +56,10 @@ async def test_excel_import(mock_read_headers, mock_read_excel, async_client, ac
     file_obj.name = "test_file.xlsx"
     filters = ["string", "string2", "string3", "string4"]
     response = await async_client.post(
-        url=f'/api/v1/parsers/excel/import_parser/?parser_type=Avito',
+        url=f'/api/v1/parsers/excel/import_parser/',
         files={"excel_file": (
             file_obj.name, file_obj, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")},
-        data={"filters": filters},
+        data={"filters": filters, "parser_type": "Avito"},
         headers=access_token_with_id
     )
     assert response.status_code == 200
@@ -69,6 +69,15 @@ async def test_excel_import(mock_read_headers, mock_read_excel, async_client, ac
 async def test_delete_parser(async_client, access_token_with_id, global_dict):
     response = await async_client.delete(
         url=f'/api/v1/parsers/delete_user_parser_by_id/{global_dict["parser_id"]}/',
+        headers=access_token_with_id
+    )
+    assert response.status_code == 200
+
+
+@pytest.mark.asyncio
+async def test_get_filters(async_client, access_token_with_id):
+    response = await async_client.get(
+        url=f'/api/v1/parsers/get_filters/?parser_type=Yandex',
         headers=access_token_with_id
     )
     assert response.status_code == 200

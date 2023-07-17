@@ -19,13 +19,13 @@ async def get_avito_data(base_id: str, background_tasks: BackgroundTasks):
 
 @api_router.post("/import_parser/", status_code=200, response_model=GetListParserData)
 async def import_parser(request: Request, excel_file: UploadFile,
-                        parser_type: ParserType, filters: list[str] = Body()):
+                        parser_type: ParserType = Body(), filters: list[str] = Body()):
     user_id = request.state.user_id
     excel_file = await import_excel(user_id, excel_file.file, parser_type, filters)
     return excel_file
 
 
 @api_router.get("/get_excel_types/", status_code=200)
-async def import_parser_filters() -> ParserTypeFilters:
+async def get_excel_types() -> ParserTypeFilters:
     response_model = ParserTypeFilters()
     return response_model
