@@ -1,13 +1,9 @@
-import os
 from datetime import datetime
 from typing import Optional
 
-from bson import ObjectId
 from fastapi import HTTPException
 
-from app.enums.parsers import ParserType
 from app.repositories.user_parsers import UserParsersRepository
-from app.services.excel import create_excel
 
 
 async def create_base(parser) -> dict:
@@ -49,28 +45,3 @@ async def get_all_by_status(status: str):
 
 async def delete_by_id(parser_id: str, owner_id: str):
     return await UserParsersRepository().delete_by_id(_id=parser_id, owner_id=owner_id)
-
-
-async def create_excel_file(base_id: str):
-    base = await UserParsersRepository().get_by_id(_id=ObjectId(base_id))
-    data = base.get("parser_data")
-    if base.get("parser_type") == ParserType.avito.value:
-        file_name = ParserType.avito.value
-        excel_file = await create_excel(data, file_name)  # type: ignore
-        return excel_file, file_name
-    elif base.get("parser_type") == ParserType.avito.yandex:
-        file_name = ParserType.yandex.value
-        excel_file = await create_excel(data, file_name)  # type: ignore
-        return excel_file, file_name
-    elif base.get("parser_type") == ParserType.vk_groups.value:
-        file_name = ParserType.vk_groups.value
-        excel_file = await create_excel(data, file_name)  # type: ignore
-        return excel_file, file_name
-    elif base.get("parser_type") == ParserType.vk_posts.value:
-        file_name = ParserType.vk_posts.value
-        excel_file = await create_excel(data, file_name)  # type: ignore
-        return excel_file, file_name
-
-
-async def delete_file(file_path: str):
-    os.remove(file_path)
