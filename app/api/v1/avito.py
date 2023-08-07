@@ -4,7 +4,7 @@ from fastapi import Query
 from app.enums.region import AvitoRegion
 from app.enums.category import AvitoCategory
 
-from app.schemas.avito import AvitoParserData, AvitoFilters
+from app.schemas.avito import AvitoParserData
 from app.schemas.parser import ReadParsersSchema
 from app.services.avito import get_all
 
@@ -23,9 +23,3 @@ async def get_avito_data(
     user_id = request.state.user_id
     all_data = await get_all(fields, region, category, user_id, limit)
     return all_data
-
-
-@api_router.get("/get_data_filters", status_code=200)
-async def get_avito_data_filters() -> AvitoFilters:
-    response_model = AvitoFilters()
-    return response_model
