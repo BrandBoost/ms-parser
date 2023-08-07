@@ -14,7 +14,7 @@ async def get_projects(request: Request):
 
     async with await client.start_session() as session:
         async with session.start_transaction():
-            db = client["BreanboostAuth"]
+            db = client[str(settings.DB_NAME)]
             projects = await db[collection_name].find_one({"_id": ObjectId(user_id)}, {"projects": 1})
     client.close()
 
