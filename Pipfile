@@ -24,6 +24,9 @@ mock = "*"
 pytest-httpx = "*"
 pyjwt = "*"
 motor = "*"
+autoflake = "*"
+flake8 = "*"
+mypy = "*"
 
 [dev-packages]
 
