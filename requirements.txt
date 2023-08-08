@@ -90,3 +90,4 @@ urllib3==2.0.3
 virtualenv==20.23.1
 wsproto==1.2.0
 yarl==1.9.2
+pandas-stubs==2.0.2.230605

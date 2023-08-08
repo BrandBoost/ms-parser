@@ -1,6 +1,4 @@
-import secrets
 from asyncio import get_event_loop
-from app.config.settings import logger
 import pytest_asyncio
 from httpx import AsyncClient
 
@@ -9,7 +7,6 @@ from app.main import app
 import jwt
 import typing as tp
 
-from fastapi.exceptions import HTTPException
 
 from datetime import timedelta, datetime
 
@@ -56,11 +53,11 @@ async def create_token(token_type: str, user_id: str) -> str:
 
 
 @pytest_asyncio.fixture(scope="session")
-def event_loop():
-    loop = get_event_loop()
-    yield loop
+def global_dict():
+    return {}
 
 
 @pytest_asyncio.fixture(scope="session")
-def global_dict():
-    return {}
+def event_loop():
+    loop = get_event_loop()
+    yield loop
