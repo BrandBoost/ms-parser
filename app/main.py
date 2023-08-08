@@ -10,7 +10,6 @@ from app.config.settings import (
 from app.api import v1_router
 from app.database.mongo import MongoManager
 from app.middlewares.auth_middleware import ApiKeyMiddleware
-from app.middlewares.projects_middleware import ProjectsMiddleware
 
 app = FastAPI()
 
@@ -22,7 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.add_middleware(ProjectsMiddleware)
+# app.add_middleware(ProjectsMiddleware)
 app.add_middleware(ApiKeyMiddleware)
 
 
