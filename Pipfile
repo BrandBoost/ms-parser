@@ -27,6 +27,7 @@ motor = "*"
 autoflake = "*"
 flake8 = "*"
 mypy = "*"
+pydantic = "==1.10.7"
 
 [dev-packages]
 
