@@ -21,6 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# app.add_middleware(ProjectsMiddleware)
 app.add_middleware(ApiKeyMiddleware)
 
 
