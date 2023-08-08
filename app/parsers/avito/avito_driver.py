@@ -9,12 +9,11 @@ class AvitoDriver:
 
     def create_options(self):
         options = webdriver.ChromeOptions()
-        options.add_argument(settings.USER_AGENT)
         options.add_argument(settings.AUTOMATION_CONTROLLED)
         options.add_argument(settings.GOOGLE_CHROME_BIN)
         options.add_argument("--headless")
         options.add_argument("disable-dev-shm-usage")
-        options.binary_location = settings.CHROMEDRIVER_PATH
+        options.binary_location = str(settings.CHROMEDRIVER_PATH)
 
         return options
 
