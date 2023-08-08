@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config.settings import (
     URL_LOCALHOST_FRONT,
     URL_BRENDBOOST_BACK,
+    URL_BRENDBOOST_FRONT_MAIN,
     URL_BRENDBOOST_FRONT, logger,
 )
 
@@ -15,7 +16,8 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[URL_LOCALHOST_FRONT, URL_BRENDBOOST_BACK, URL_BRENDBOOST_FRONT],
+    allow_origins=[URL_LOCALHOST_FRONT, URL_BRENDBOOST_BACK,
+                   URL_BRENDBOOST_FRONT, URL_BRENDBOOST_FRONT_MAIN],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
