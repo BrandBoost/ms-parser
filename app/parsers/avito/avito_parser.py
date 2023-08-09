@@ -101,10 +101,15 @@ class AvitoParser:
         desc = driver.find_element('xpath', "//div[@data-marker='item-view/item-description']")
         return desc.text
 
-    async def get_data(self, items, fields_to_parse):
+    async def get_data(self, items, fields_to_parse, limit=None):
         try:
             items = await items
+            counter = 0  # Initialize a counter
+
             for item in items:
+                if limit is not None and counter >= limit:
+                    break  # Exit the loop if the limit is reached
+
                 item.click()
 
                 self.avito_driver.driver.switch_to.window(
@@ -149,10 +154,12 @@ class AvitoParser:
                     self.avito_driver.driver.window_handles[0]
                 )
 
+                counter += 1  # Increment the counter
+
         except Exception as ex:
             logger.exception(f"No data uploaded: {ex} ]")
 
-    async def get_all_data(self, fields: List[str], region, category) -> list:
-        await self.get_data(self.get_items(region, category), fields)
+    async def get_all_data(self, fields: List[str], region, category, limit=None) -> list:
+        await self.get_data(self.get_items(region, category), fields, limit)
         filtered_data = [data.dict() for data in self.all_data]
         return filtered_data

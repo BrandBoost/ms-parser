@@ -35,10 +35,6 @@ URL_BRENDBOOST_FRONT = os.getenv("URL_BRENDBOOST_FRONT")
 # VK
 VK_ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 
-# Avito
-GOOGLE_CHROME_BIN = os.getenv("GOOGLE_CHROME_BIN")
-CHROMEDRIVER_PATH = os.getenv("CROMDRIVER_PATH")
-
 # MongoManager configuration
 MONGO_URI = os.getenv("MONGO_URI")
 DB_NAME = os.getenv("DB_NAME")
