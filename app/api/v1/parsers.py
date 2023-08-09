@@ -54,6 +54,21 @@ async def delete_user_parsers_by_ids(request: Request, parser_ids: list):
     return JSONResponse(content=response_data, status_code=200)
 
 
+@api_router.delete("/delete_user_parser_by_owner/", status_code=200)
+async def delete_user_parser_by_owner(request: Request):
+    user_id = request.state.user_id
+
+    result = await parser.delete_all(owner_id=user_id)
+    deleted_count = result.get('deleted_count')
+    if deleted_count > 0:
+        response_data = {
+            "result": f"Successfully deleted {deleted_count} parser(s)"}
+        return JSONResponse(content=response_data, status_code=200)
+    else:
+        raise HTTPException(
+            status_code=404, detail="No parsers found for deletion")
+
+
 @api_router.get("/get_filters/", status_code=200)
 async def get_filters(parser_type: str):
     if not parser_type:
