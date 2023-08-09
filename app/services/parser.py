@@ -51,3 +51,13 @@ async def delete_all(parser_ids: list, owner_id: str):
     if not parser_ids:
         raise HTTPException(status_code=400, detail="No parser IDs provided")
     return await UserParsersRepository().bulk_delete(ids=parser_ids, owner_id=owner_id)
+
+
+async def delete_all(owner_id: str):
+    if not owner_id:
+        raise HTTPException(status_code=400, detail="No user ID provided")
+
+    repository = UserParsersRepository()
+    deleted_count = await repository.delete_by_owner_id(owner_id)
+
+    return {"deleted_count": deleted_count}
