@@ -45,3 +45,7 @@ async def get_all_by_status(status: str):
 
 async def delete_by_id(parser_id: str, owner_id: str):
     return await UserParsersRepository().delete_by_id(_id=parser_id, owner_id=owner_id)
+
+
+async def delete_all(parser_ids: list, owner_id: str):
+    return await UserParsersRepository().bulk_delete(ids=parser_ids, owner_id=owner_id)
