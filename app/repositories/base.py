@@ -23,4 +23,7 @@ class BaseRepository(MongoManager):
 
     async def delete_by_id(self, _id: tp.Union[str, ObjectId], owner_id: str) -> None:
         user_id = ObjectId(_id) if isinstance(_id, str) else _id
-        await self.db[self.collection].delete_one({'_id': user_id, "owner_id": owner_id})  # type: ignore
+        await self.db[str(self.collection)].delete_one({'_id': user_id, "owner_id": owner_id})
+
+    async def bulk_delete(self, ids: tp.List[tp.Union[str, ObjectId]], owner_id) -> None:
+        await self.db[str(self.collection)].delete_many({'_id': {"$in": ids}, "owner_id": owner_id})
