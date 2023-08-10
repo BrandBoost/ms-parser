@@ -14,8 +14,6 @@ class AvitoDriver:
         options.add_argument("--no-sandbox")
         options.add_argument("--headless")
 
-
-
         return options
 
     async def initialize(self):

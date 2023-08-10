@@ -38,7 +38,7 @@ async def delete_user_parsers(
     return PlainTextResponse("Deletion completed successfully")
 
 
-@api_router.delete("/delete_user_parser_by_id/", status_code=200)
+@api_router.delete("/delete_user_parser_by_id/{parser_id}/", status_code=200)
 async def delete_user_parser_by_id(request: Request, parser_id: str,):
     user_id = request.state.user_id
     await parser.delete_by_id(parser_id=parser_id, owner_id=user_id)
