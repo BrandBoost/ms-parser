@@ -12,29 +12,26 @@ class UserParsersRepository(BaseRepository):
         self.collection = 'parsers'
         super().__init__()
 
-    # TODO: Денис, везде возвращем не dict, а схему т.к. у нас репозиторий с парсерами то они должны возварщать оп типу:
-    #  -> ReadParsersSchema:
-    #  это к первым двум эндпоинтам тут, просто я не знаю какую схему ты планировал возвращать
-    async def get_by_id(self, _id: ObjectId) -> dict:
+    async def get_by_id(self, _id: ObjectId):
         # type: ignore
-        return await self.db[self.collection].find_one({"_id": _id})
+        return await self.db[str(self.collection)].find_one({"_id": _id})
 
-    async def get_by_name(self, name: str) -> dict:
+    async def get_by_name(self, name: str):
         # type: ignore
-        return await self.db[self.collection].find_one({"name": name})
+        return await self.db[str(self.collection)].find_one({"name": name})
 
     async def get_by_owner_id(self, owner_id: str):
         # type: ignore
-        return await self.db[self.collection].find({"owner_id": owner_id}).to_list(length=None)
+        return await self.db[str(self.collection)].find({"owner_id": owner_id}).to_list(length=None)
 
     async def get_all_by_type(self, parser_type: str) -> List[BaseParsersSchema]:
         # type: ignore
-        return await self.db[self.collection].find({"parser_type": parser_type}).to_list(length=None)
+        return await self.db[str(self.collection)].find({"parser_type": parser_type}).to_list(length=None)
 
     async def get_by_filter(self, owner_id: str, _id: str):
         try:
             # type: ignore
-            return await self.db[self.collection].find_one({"owner_id": owner_id, "_id": ObjectId(_id)})
+            return await self.db[str(self.collection)].find_one({"owner_id": owner_id, "_id": ObjectId(_id)})
         except errors.InvalidId:
             return None
 
@@ -51,7 +48,7 @@ class UserParsersRepository(BaseRepository):
                         "$lte": to_created_at}  # type: ignore
 
                 # type: ignore
-                return await self.db[self.collection].delete_many(query)
+                return await self.db[str(self.collection)].delete_many(query)
             except errors.InvalidId:
                 return None
         except errors.InvalidId:
@@ -59,12 +56,11 @@ class UserParsersRepository(BaseRepository):
 
     async def get_all_by_status(self, status: str) -> List[BaseParsersSchema]:
         # type: ignore
-        return await self.db[self.collection].find({"status": status}).to_list(length=None)
+        return await self.db[str(self.collection)].find({"status": status}).to_list(length=None)
 
     async def delete_by_owner_id(self, owner_id: str):
         try:
-            query = {"owner_id": owner_id}
-            result = await self.db[self.collection].delete_many(query)
+            result = await self.db[str(self.collection)].delete_many({"owner_id": owner_id})
             return result.deleted_count
         except errors.InvalidId:
             return 0

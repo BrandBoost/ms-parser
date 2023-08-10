@@ -38,7 +38,6 @@ class ApiKeyMiddleware(BaseHTTPMiddleware):
     not_authorize_paths = [
         "/docs",
         "/openapi.json",
-        "/api/v1/parsers/delete_user_parser_by_id/"
     ]
 
     async def dispatch(self, request: Request, call_next):
