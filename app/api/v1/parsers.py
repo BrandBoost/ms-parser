@@ -38,7 +38,7 @@ async def delete_user_parsers(
     return PlainTextResponse("Deletion completed successfully")
 
 
-@api_router.delete("/delete_user_parser_by_id/", status_code=200)
+@api_router.delete("/delete_user_parser_by_id/{parser_id}/", status_code=200)
 async def delete_user_parser_by_id(request: Request, parser_id: str,):
     user_id = request.state.user_id
     await parser.delete_by_id(parser_id=parser_id, owner_id=user_id)
@@ -58,15 +58,8 @@ async def delete_user_parsers_by_ids(request: Request, parser_ids: list):
 async def delete_user_parser_by_owner(request: Request):
     user_id = request.state.user_id
 
-    result = await parser.delete_all(owner_id=user_id)
-    deleted_count = result.get('deleted_count')
-    if deleted_count > 0:
-        response_data = {
-            "result": f"Successfully deleted {deleted_count} parser(s)"}
-        return JSONResponse(content=response_data, status_code=200)
-    else:
-        raise HTTPException(
-            status_code=404, detail="No parsers found for deletion")
+    result = await parser.delete_all_data(owner_id=user_id)
+    return JSONResponse(content=result, status_code=200)
 
 
 @api_router.get("/get_filters/", status_code=200)
