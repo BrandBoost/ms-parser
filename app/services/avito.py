@@ -3,10 +3,9 @@ from app.schemas.parser import BaseParsersSchema
 from app.services import parser
 from app.enums.parsers import ParserType, ParserStatus
 
-parser_avito = AvitoParser()
-
 
 async def get_all(fields, region, category, user_id, limit):
+    parser_avito = AvitoParser()
     await parser_avito.avito_driver.initialize()
     data = await parser_avito.get_all_data(fields, region, category, limit)
     await parser_avito.avito_driver.quit()
